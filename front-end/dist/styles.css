@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  font-size: 1.6rem; }
+
+button {
+  cursor: pointer; }
+
+button:disabled {
+  cursor: default; }
+
+.add-item {
+  width: 100%;
+  padding: 1.2rem; }
+  .add-item form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
+
+.add-item__text-input {
+  flex-grow: 1;
+  padding: 10px;
+  outline: none;
+  margin: 0 1.2rem 0 0; }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.list-widget {
+  width: 500px; }
+
+.header {
+  height: 10rem;
+  text-align: center; }
+
+.list-item {
+  width: 100%;
+  border: 1px black solid;
+  padding: 0 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.completed {
+  background: rgba(49, 165, 49, 0.5);
+  text-decoration: line-through; }
+
+.remove-items {
+  width: 100%;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-evenly; }
+  .remove-items button {
+    width: 50%;
+    height: 30px; }
+

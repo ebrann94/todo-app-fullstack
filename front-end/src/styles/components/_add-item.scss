@@ -1,0 +1,22 @@
+.add-item {
+    width: 100%;
+
+    form {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+}
+
+.add-item__text-input {
+    flex-grow: 1;
+    padding: 10px;
+
+    outline: none;
+    margin: 0 $s-size 0 0;
+
+    border-radius: $border-radius;
+    border: 1px solid $light-grey;
+    font-family: 'Raleway', cursive;
+}

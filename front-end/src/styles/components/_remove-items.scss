@@ -1,0 +1,18 @@
+.remove-items {
+    width: 100%;
+    padding: $s-size 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        width: 48%;
+        height: 30px;
+    }
+    
+}
+
+button:active {
+    border: grey 2px solid;
+    border-width: 0 2px 2px 0;
+}

@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
+html {
+    font-size: 62.5%;
+    margin: 0;
+    // background: rgb(69, 69, 189);
+}
+
+body {
+    // font-family: 'futura', arial, sans-serif;
+    font-family: 'Raleway', cursive;
+
+    font-size: $m-size;
+    color: $text-grey;
+
+    background: rgb(6,0,113);
+    background: linear-gradient(356deg, rgba(6,0,113,1) 0%, rgba(22,22,144,1) 7%, rgba(16,74,182,1) 24%, rgba(16,153,217,1) 100%);
+    min-height: 100vh;
+    height: 100%;
+}
+
+button {
+    cursor: pointer;
+    background: white;
+    color: $dark-grey;
+    font-family: 'Raleway', sans-serif;
+
+    border-radius: $border-radius;
+    border: 1px solid $light-grey;
+    
+    outline: none;
+}
+
+button:disabled {
+    cursor: default;
+}

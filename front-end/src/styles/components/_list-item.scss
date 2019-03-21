@@ -1,0 +1,24 @@
+.list-item {
+    width: 800px;
+    background: white;
+
+    border: 1px $light-grey solid;
+    border-width: 0 0 1px 0;
+    border-radius: $border-radius;
+    box-shadow: $grey-shadow;
+    
+    padding: 0 $s-size;
+    margin: 10px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: $m-size;
+
+}
+
+.completed {
+    background: rgb(123, 218, 123);
+    text-decoration: line-through;
+}

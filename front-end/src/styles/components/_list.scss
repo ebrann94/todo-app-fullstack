@@ -1,0 +1,38 @@
+.items-container {
+    // box-shadow: $grey-shadow;
+
+    border-radius: $border-radius;
+    // overflow: hidden;
+}
+
+.list-controls {
+    margin-bottom: $m-size;
+    width: 500px;
+}
+
+.fade-enter {
+    opacity: 0.01;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    background: rgba(255, 255, 255, 1.0);
+    transition: opacity 200ms ease, 
+                background 200ms ease;
+}
+
+.fade-exit {
+    opacity: 1;
+    background: rgba(255, 255, 255, 1.0);
+    max-height: 100px;
+}
+
+.fade-exit-active {
+    opacity: 0.01;
+    background: rgba(255, 255, 255, 0.01);
+    max-height: 0px;
+    transition: opacity 200ms ease 0s, 
+                background 200ms ease 0s,
+                max-height 200ms ease-in-out;
+}

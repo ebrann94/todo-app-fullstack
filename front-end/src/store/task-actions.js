@@ -70,7 +70,6 @@ export const startRemoveOne = (id) => {
             }
         }).
         then(task => {
-            console.log(task);
             dispatch(removeOne(task._id))
         })
     }

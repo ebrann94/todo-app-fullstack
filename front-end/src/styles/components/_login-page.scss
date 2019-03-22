@@ -1,0 +1,64 @@
+.login-container {
+    width: 50%;
+    background: white;
+    margin: auto;
+    padding: 10px;
+
+    border-radius: $border-radius;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form {
+    width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.login__input {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    
+
+    margin: 20px 0;
+
+    input {
+        flex-grow: 1;
+        // max-width: 300px;
+        padding: 5px;
+
+        border: solid lightgrey;
+        border-width: 0 0 1px 0;
+
+        outline: none;
+    }
+
+    label {
+        height: 100%;
+        min-width: 100px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.login__submit {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+}
+
+.signup-link {
+    margin: 20px 0;
+
+    display: flex;
+    justify-content: center;
+
+    p {
+        margin-right: 10px;
+    }
+}

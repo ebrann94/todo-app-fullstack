@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import TaskListPage from './components/taskList/TaskListPage';
@@ -10,14 +10,10 @@ import { getUserInfo } from './store/user-actions';
 class App extends React.Component {
     constructor(props) {
         super(props);
-
-        if (localStorage.getItem('token')) {
+        
+        if (localStorage.getItem('token') || localStorage.getItem('token') === 'undefined') {
             props.dispatch(getUserInfo());
         }
-    }
-
-    componentDidUpdate() {
-        // localStorage.setItem('tasks', JSON.stringify(this.state.items));
     }
 
     render() {
@@ -27,15 +23,35 @@ class App extends React.Component {
                     <Route 
                         path="/" 
                         exact={true} 
-                        component={this.props.loggedIn ? TaskListPage : LoginPage}
+                        render={() => (
+                            this.props.loggedIn ? (
+                                <TaskListPage />
+                            ) : (
+                                <Redirect to="/login" />
+                            )
+                        )}
                     />
                     <Route 
                         path="/login" 
-                        component={LoginPage}
+                        // component={LoginPage}
+                        render={() => (
+                            this.props.loggedIn ? (
+                                <Redirect to="/" />
+                            ) : (
+                                <LoginPage />
+                            )
+                        )}
                     />
                     <Route 
                         path="/signup" 
-                        component={SignupPage} 
+                        // component={SignupPage} 
+                        render={() => (
+                            this.props.loggedIn ? (
+                                <Redirect to="/" />
+                            ) : (
+                                <SignupPage />
+                            )
+                        )}
                     />
                     {/* <Route path="/account" component={} /> */}
                 </Switch>

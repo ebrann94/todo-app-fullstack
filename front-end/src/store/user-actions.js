@@ -43,13 +43,16 @@ export const startLogin = (userInfo) => {
             if (res.ok) {
                 return res.json();
             } else {
-                dispatch(loginError())
+                throw new Error('Bad Request');
             }
         })
         .then(({ user, token, tasks }) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
             dispatch(populateTasks(tasks));
+        })
+        .catch(err => {
+            dispatch(loginError('Incorrect Password or Email'))
         });
     }
 }
@@ -85,12 +88,15 @@ export const startSignup = (data) => {
             if (res.ok) {
                 return res.json();
             } else {
-                dispatch(loginError('Didn\'t Work'));
+                throw new Error('Unable to create account')
             }
         })
         .then(({user, token}) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
+        })
+        .catch(err => {
+            dispatch(loginError(err));
         })
     }
 }

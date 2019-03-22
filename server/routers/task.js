@@ -62,7 +62,6 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         const task = await Task.findOne({_id: req.params.id, owner: req.user._id});
         task.completed = !task.completed;
         await task.save();
-        console.log(task);
         res.send(task)
     } catch (e) {
         res.status(500).send();

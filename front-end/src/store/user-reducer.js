@@ -15,12 +15,10 @@ const defaultState = {
 export default (state = defaultState, action) => {
     switch (action.type) {
         case 'LOGIN_PENDING':
-            console.log('loginPending Action')
             return {
                 logInPending: true
             }
         case 'LOGIN_SUCCESS':
-            console.log('login succes action');
             return {
                 clientToken: action.token,
                 user: action.user,
@@ -31,7 +29,11 @@ export default (state = defaultState, action) => {
             return {
                 ...defaultState
             }
-
+        case 'LOGIN_ERROR' :
+            return {
+                logInPending: false,
+                loginError: action.error
+            }
         default: 
             return {
                 ...state

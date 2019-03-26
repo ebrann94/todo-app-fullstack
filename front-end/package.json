@@ -6,9 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack --mode=production",
-    "dev-server": "webpack-dev-server --mode=development",
-    "start": "node ./server/server.js",
-    "heroku-postbuild": "webpack -p"
+    "dev-server": "webpack-dev-server --mode=development"
   },
   "author": "Ethan Brann",
   "license": "ISC",

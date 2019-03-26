@@ -1,22 +1,83 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
 * {
   box-sizing: border-box; }
 
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  margin: 0; }
 
 body {
-  font-family: helvetica, arial, sans-serif;
-  font-size: 1.6rem; }
+  font-family: 'Raleway', cursive;
+  font-size: 1.6rem;
+  color: rgba(0, 0, 0, 0.8);
+  background: #060071;
+  background: linear-gradient(356deg, #060071 0%, #161690 7%, #104ab6 24%, #1099d9 100%);
+  min-height: 100vh;
+  height: 100%; }
 
 button {
-  cursor: pointer; }
+  cursor: pointer;
+  background: white;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: 'Raleway', sans-serif;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  outline: none; }
 
 button:disabled {
   cursor: default; }
 
+p {
+  margin: 0; }
+
+.login-container {
+  width: 50%;
+  background: white;
+  margin: auto;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
+.login-form {
+  width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column; }
+
+.login__input {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin: 20px 0; }
+  .login__input input {
+    flex-grow: 1;
+    padding: 5px;
+    border: solid lightgrey;
+    border-width: 0 0 1px 0;
+    outline: none; }
+  .login__input label {
+    height: 100%;
+    min-width: 100px;
+    display: inline-block;
+    vertical-align: middle; }
+
+.login__submit {
+  width: 80px;
+  height: 80px;
+  margin: auto; }
+
+.signup-link {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center; }
+  .signup-link p {
+    margin-right: 10px; }
+
 .add-item {
-  width: 100%;
-  padding: 1.2rem; }
+  width: 100%; }
   .add-item form {
     width: 100%;
     display: flex;
@@ -26,7 +87,10 @@ button:disabled {
   flex-grow: 1;
   padding: 10px;
   outline: none;
-  margin: 0 1.2rem 0 0; }
+  margin: 0 1.2rem 0 0;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-family: 'Raleway', cursive; }
 
 .container {
   display: flex;
@@ -34,30 +98,83 @@ button:disabled {
   align-items: center; }
 
 .list-widget {
-  width: 500px; }
-
-.header {
-  height: 10rem;
-  text-align: center; }
-
-.list-item {
   width: 100%;
-  border: 1px black solid;
-  padding: 0 1.2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center; }
 
+.header {
+  font-family: 'Indie Flower', cursive;
+  font-size: 2.4rem;
+  text-align: center;
+  color: white; }
+  .header h1 {
+    margin: 1.6rem; }
+
+.user-info {
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.2rem; }
+
+.items-container {
+  border-radius: 10px; }
+
+.list-controls {
+  margin-bottom: 1.6rem;
+  width: 500px; }
+
+.fade-enter {
+  opacity: 0.01;
+  background: rgba(255, 255, 255, 0.01); }
+
+.fade-enter-active {
+  opacity: 1;
+  background: white;
+  transition: opacity 200ms ease,  background 200ms ease; }
+
+.fade-exit {
+  opacity: 1;
+  background: white;
+  max-height: 100px; }
+
+.fade-exit-active {
+  opacity: 0.01;
+  background: rgba(255, 255, 255, 0.01);
+  max-height: 0px;
+  transition: opacity 200ms ease 0s,  background 200ms ease 0s, max-height 200ms ease-in-out; }
+
+.list-item {
+  width: 800px;
+  height: 50px;
+  background: white;
+  border: 1px rgba(0, 0, 0, 0.15) solid;
+  border-width: 0 0 1px 0;
+  border-radius: 10px;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  padding: 0 1.2rem;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.6rem; }
+
 .completed {
-  background: rgba(49, 165, 49, 0.5);
+  background: #7bda7b;
   text-decoration: line-through; }
 
 .remove-items {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.2rem 0;
   display: flex;
-  justify-content: space-evenly; }
+  justify-content: space-between; }
   .remove-items button {
-    width: 50%;
+    width: 48%;
     height: 30px; }
+
+button:active {
+  border: grey 2px solid;
+  border-width: 0 2px 2px 0; }
 

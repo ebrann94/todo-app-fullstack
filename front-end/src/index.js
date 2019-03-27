@@ -9,11 +9,6 @@ import App from './App';
 import './styles/styles.scss';
 
 const store = createStore(combineReducers({tasks, user}), applyMiddleware(thunk));
-console.log(store.getState());
-
-store.subscribe(() => {
-    console.log(store.getState());
-})
 
 const jsx = (
     <Provider store={store}>

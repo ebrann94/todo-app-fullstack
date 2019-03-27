@@ -7,8 +7,19 @@ class SignupPage extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            fields: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: ''
+            },
+            error: ''
+        }
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkPasswordLength = this.checkPasswordLength.bind(this);
     }
 
     handleInputChange(e) {
@@ -17,25 +28,35 @@ class SignupPage extends React.Component {
         const name = target.name;
 
         this.setState({
-            [name]: value
+            fields: {
+                [name]: value
+            }
         });
     }
 
     handleSubmit(e) {
         e.preventDefault();
+        const fields = this.state.fields;
 
-        if (this.state.password.length < 7 ) {
-            this.setState({error: "Password must be 7 characters or more"})
+        const keys = Object.keys(fields); 
+        const isFormFull= keys.every(key => fields[key]);
+
+        if (fields.password.length < 7) {
+            this.setState({error: 'Password must be 7 characters or more'});
+        } else if (!isFormFull) {
+            this.setState({error: 'Please fill in all fields'});
         } else {
-            const userInfo = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                password: this.state.password
-            }
-            this.props.dispatch(startSignup(userInfo));
+            this.props.dispatch(startSignup(fields));
         }
     } 
+
+    checkPasswordLength() {
+        if (this.state.password.length < 7) {
+            this.setState({error: 'Password must be 7 characters or more'})
+        } else {
+            this.setState({error: ''});
+        }
+    }
 
     componentDidUpdate() {
         console.log(this.state);
@@ -54,6 +75,7 @@ class SignupPage extends React.Component {
                         <input 
                             type="text" 
                             name="firstName"
+                            value={this.state.firstName}
                             onChange={this.handleInputChange}
                         />
                         
@@ -63,6 +85,7 @@ class SignupPage extends React.Component {
                         <input 
                             type="text" 
                             name="lastName" 
+                            value={this.state.lastName}
                             onChange={this.handleInputChange}
                         />
                         
@@ -72,6 +95,7 @@ class SignupPage extends React.Component {
                         <input  
                             type="text" 
                             name="email" 
+                            value={this.state.email}
                             onChange={this.handleInputChange}
                         />
                         
@@ -81,9 +105,12 @@ class SignupPage extends React.Component {
                         <input 
                             type="password"
                             name="password" 
+                            value={this.state.password}
+                            onBlur={this.checkPasswordLength}
                             onChange={this.handleInputChange}
                         />
                     </div>
+                    {this.state.error && <p className="login-error">{this.state.error}</p>}
                     <input type="submit" value="Sign Up" className="login__submit"/>
                 </form>
             </div>

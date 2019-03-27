@@ -7,6 +7,13 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            fields: {
+                email: '',
+                password: ''
+            }
+        }
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,18 +24,25 @@ class LoginPage extends React.Component {
         const name = target.name;
 
         this.setState({
-            [name]: value
+            fields: {
+                [name]: value
+            }
         });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        const userInfo = {
-            email: this.state.email,
-            password: this.state.password
+        const userInfo = this.state
+        const keys = Object.keys(userInfo);
+        const isFormFull = keys.every(key => userInfo[key]);
+
+        if (!isFormFull) {
+            this.setState({error: 'Please fill out all fields'});
+        } else {
+            this.props.dispatch(startLogin(userInfo));
+            e.target.reset();
         }
-        this.props.dispatch(startLogin(userInfo));
-        e.target.reset();
+
     }
 
     componentDidUpdate() {
@@ -48,7 +62,7 @@ class LoginPage extends React.Component {
                         <input 
                             type="text" 
                             name="email" 
-                            required
+                            value={this.state.email}
                             onChange={this.handleInputChange}
                         />
                     </div>
@@ -57,7 +71,7 @@ class LoginPage extends React.Component {
                         <input 
                             type="password" 
                             name="password" 
-                            required 
+                            value={this.state.password}
                             onChange={this.handleInputChange}
                         />
                     </div>

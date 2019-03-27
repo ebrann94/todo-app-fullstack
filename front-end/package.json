@@ -1,7 +1,7 @@
 {
-  "name": "indecision-app",
+  "name": "todo-list",
   "version": "1.0.0",
-  "description": "no idea",
+  "description": "simple todo list front end",
   "main": "app.js",
   "scripts": {
     "test": "jest",
@@ -41,6 +41,6 @@
     "webpack-dev-server": "^3.1.14"
   },
   "engines": {
-    "node": "11.6"
+    "node": "11.x"
   }
 }

@@ -75,7 +75,7 @@ class SignupPage extends React.Component {
                         onSubmit={this.handleSubmit}
                     >
                         <div className="login__input">
-                            <label htmlFor="firstName">First Name:</label>
+                            <label htmlFor="firstName">First Name</label>
                             <input
                                 type="text"
                                 name="firstName"
@@ -85,7 +85,7 @@ class SignupPage extends React.Component {
 
                         </div>
                         <div className="login__input">
-                            <label htmlFor="lastName">Last Name:</label>
+                            <label htmlFor="lastName">Last Name</label>
                             <input
                                 type="text"
                                 name="lastName"
@@ -95,7 +95,7 @@ class SignupPage extends React.Component {
 
                         </div>
                         <div className="login__input">
-                            <label htmlFor="email">Email: </label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="text"
                                 name="email"
@@ -105,7 +105,7 @@ class SignupPage extends React.Component {
 
                         </div>
                         <div className="login__input">
-                            <label htmlFor="password">Password:</label>
+                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 name="password"

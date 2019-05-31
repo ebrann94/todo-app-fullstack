@@ -10,19 +10,21 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className="items-container">
+            <div className="list-container">
                 <TransitionGroup className="todo-list">  
                     {
-                        this.props.items.map((item, index) => {
+                        this.props.items.map((item) => {
                             return (
                                 <CSSTransition
                                     classNames="fade"
                                     timeout={200}
                                     key={item._id}
                                 >
-                                    <ListItem 
-                                        {...item}
-                                    />      
+                                    <div className="list-item-wrapper">
+                                        <ListItem
+                                            {...item}
+                                        />
+                                    </div>
                                 </CSSTransition>
                             );
                         })

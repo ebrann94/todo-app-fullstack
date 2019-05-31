@@ -1,6 +1,11 @@
 
+const defaultState = [{
+    id: '1234',
+    text: 'Washing Up',
+    completed: false,
+}];
 
-export default (state = [], action) => {
+export default (state = defaultState, action) => {
     switch (action.type) {
         case 'ADD_TASK_SUCCESS':    
             return [...state, action.task];

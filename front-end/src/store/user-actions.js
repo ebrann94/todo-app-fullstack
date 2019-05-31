@@ -1,10 +1,11 @@
 import { populateTasks } from './task-actions';
+import { handleResponse } from "./utils";
 
 export const loginPending = () => {
     return {
         type: 'LOGIN_PENDING'
     }
-}
+};
 
 const login = ({firstName, lastName, email, _id}, token) => {
     return {
@@ -17,17 +18,16 @@ const login = ({firstName, lastName, email, _id}, token) => {
         },
         token
     }
-}
+};
 
 const loginError = (error) => {
     return {
         type: 'LOGIN_ERROR',
         error
     }
-}
+};
 
 export const startLogin = (userInfo) => {
-
     return (dispatch) => {
         dispatch(loginPending());
         // Login route
@@ -38,24 +38,18 @@ export const startLogin = (userInfo) => {
             },
             body: JSON.stringify(userInfo)
         })
-        .then(res => {
-            // Check for login erros
-            if (res.ok) {
-                return res.json();
-            } else {
-                throw new Error('Bad Request');
-            }
-        })
+        .then(handleResponse)
         .then(({ user, token, tasks }) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
             dispatch(populateTasks(tasks));
         })
         .catch(err => {
+            console.log(err);
             dispatch(loginError('Incorrect Password or Email'))
         });
     }
-}
+};
 
 export const startLogout = () => {
     return (dispatch) => {
@@ -72,7 +66,7 @@ export const startLogout = () => {
             }
         })
     }
-}
+};
 
 export const startSignup = (data) => {
     return dispatch => {
@@ -84,22 +78,17 @@ export const startSignup = (data) => {
             },
             body: JSON.stringify(data)
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                throw new Error('Unable to create account')
-            }
-        })
+        .then(handleResponse)
         .then(({user, token}) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
         })
-        .catch(err => {
-            dispatch(loginError(err));
-        })
+        .catch(error => {
+            console.log(error);
+            dispatch(loginError(error));
+        });
     }
-}
+};
 
 export const getUserInfo = () => {
     return dispatch => {
@@ -109,12 +98,12 @@ export const getUserInfo = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => res.json())
-        .then(data => {
-            const user = data.user;
-            const tasks = data.tasks;
+        .then(handleResponse)
+        .then(({ user, tasks}) => {
             dispatch(login(user));
             dispatch(populateTasks(tasks));
+        }).catch(error => {
+            console.log(error);
         })
     }
-}
+};

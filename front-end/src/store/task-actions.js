@@ -1,10 +1,11 @@
+import { handleResponse } from "./utils";
 
 export const addTask = (task) => {
     return {
         type: 'ADD_TASK_SUCCESS',
         task
     }
-}
+};
 
 export const startAddTask = (text) => {
     return dispatch => {
@@ -16,22 +17,22 @@ export const startAddTask = (text) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => {
-            return res.json()
-        })
+        .then(handleResponse)
         .then(data => {
-            console.log(data);
             dispatch(addTask(data))
         })
+        .catch(error => {
+            console.log(error);
+        })
     }
-}
+};
 
 export const completeTask = (task) => {
     return {
         type: 'COMPLETE_TASK',
         task
     }
-} 
+};
 
 export const startCompleteTask = (id) => {
     return dispatch => {
@@ -41,20 +42,20 @@ export const startCompleteTask = (id) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => res.json())
+        .then(handleResponse)
         .then(task => {
             // console.log(task);
             dispatch(completeTask(task))
         })
     }
-}
+};
 
 export const removeOne = (id) => {
     return {
         type: 'REMOVE_ONE',
         id
     }
-}
+};
 
 export const startRemoveOne = (id) => {
     return dispatch => {
@@ -64,22 +65,21 @@ export const startRemoveOne = (id) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        }).
-        then(task => {
+        .then(handleResponse)
+        .then(task => {
             dispatch(removeOne(task._id))
         })
+        .catch(error => {
+            console.log(error);
+        })
     }
-}
+};
 
 export const removeAll = () => {
     return {
         type: 'REMOVE_ALL'
     }
-}
+};
 
 export const startRemoveAll = () => {
     return dispatch => {
@@ -94,13 +94,13 @@ export const startRemoveAll = () => {
             }
         })
     }
-}
+};
 
 export const removeCompleted = (tasks) => {
     return {
         type: 'REMOVE_COMPLETED'
     }
-}
+};
 
 export const startRemoveCompleted = () => {
     return dispatch => {
@@ -110,20 +110,19 @@ export const startRemoveCompleted = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then(handleResponse)
         .then(tasks => {
             dispatch(removeCompleted());
         })
+        .catch(error => {
+            console.log(error);
+        });
     }
-}
+};
 
 export const populateTasks = (tasks) => {
     return {
         type: 'POPULATE_TASKS',
         tasks
     }
-}
+};

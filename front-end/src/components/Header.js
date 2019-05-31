@@ -6,10 +6,15 @@ const Header = (props) => (
     <div className="header">
        <h1>To Do List</h1>
        <div className="user-info">
-           <p>Logged in as: {props.user.firstName}</p>
-            <button onClick={(e) => {
-                props.dispatch(startLogout());
-            }}>Logout</button>
+           <p>Logged in as: <span className="user-info__name">{props.user.firstName}</span></p>
+            <button
+                onClick={(e) => {
+                    props.dispatch(startLogout());
+                }}
+                className="logout-btn"
+            >
+                Logout
+            </button>
        </div>
     </div>
 );

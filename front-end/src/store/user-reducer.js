@@ -7,10 +7,10 @@ const defaultState = {
         email: '',
         id: ''
     },
-    loggedIn: false,
+    loggedIn: true,
     loginPending: false,
     loginError: ''
-}
+};
 
 export default (state = defaultState, action) => {
     switch (action.type) {

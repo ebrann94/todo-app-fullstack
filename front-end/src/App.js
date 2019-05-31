@@ -11,52 +11,50 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         
-        if (localStorage.getItem('token') || localStorage.getItem('token') === 'undefined') {
-            props.dispatch(getUserInfo());
-        }
+        // if (localStorage.getItem('token') || localStorage.getItem('token') === 'undefined') {
+        //     props.dispatch(getUserInfo());
+        // }
     }
 
     render() {
-        return(
+        return (
             <BrowserRouter>
                 <Switch>
-                    <Route 
-                        path="/" 
-                        exact={true} 
-                        render={() => (
+                    <Route
+                        path="/"
+                        exact={true}
+                        render={(routeProps) => (
                             this.props.loggedIn ? (
                                 <TaskListPage />
                             ) : (
-                                <Redirect to="/login" />
+                                <Redirect to="/login"/>
                             )
                         )}
                     />
-                    <Route 
-                        path="/login" 
-                        // component={LoginPage}
+                    <Route
+                        path="/login"
                         render={() => (
                             this.props.loggedIn ? (
-                                <Redirect to="/" />
+                                <Redirect to="/"/>
                             ) : (
-                                <LoginPage />
+                                <LoginPage/>
                             )
                         )}
                     />
-                    <Route 
-                        path="/signup" 
-                        // component={SignupPage} 
+                    <Route
+                        path="/signup"
                         render={() => (
                             this.props.loggedIn ? (
-                                <Redirect to="/" />
+                                <Redirect to="/"/>
                             ) : (
-                                <SignupPage />
+                                <SignupPage/>
                             )
                         )}
                     />
                     {/* <Route path="/account" component={} /> */}
                 </Switch>
             </BrowserRouter>
-        )
+        );
     }
 }
 
@@ -64,6 +62,6 @@ const mapStateToProps = (state) => {
     return {
         ...state.user
     }
-}
+};
 
 export default connect(mapStateToProps)(App);

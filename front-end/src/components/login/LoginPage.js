@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
                         onSubmit={this.handleSubmit}
                     >
                         <div className="login__email-input login__input">
-                            <label htmlFor="email">Email: </label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="text"
                                 name="email"
@@ -69,7 +69,7 @@ class LoginPage extends React.Component {
                             />
                         </div>
                         <div className="login__password-input login__input">
-                            <label htmlFor="password">Password: </label>
+                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 name="password"

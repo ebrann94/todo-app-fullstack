@@ -37,12 +37,14 @@ router.delete('/tasks', auth, async (req, res) => {
     }
 });
 
-router.delete('/tasks/:id', auth, async (req, res) => {
+router.delete('/tasks/one/:id', auth, async (req, res) => {
     try {
+        console.log(req.user);
         const task = await Task.findOneAndDelete({ _id: req.params.id, owner: req.user._id});
 
         res.send(task);
     } catch (e) {
+        // console.log(e);
         res.status(500).send();
     }
 });
@@ -53,6 +55,7 @@ router.delete('/tasks/completed', auth, async (req, res) => {
 
         res.send(tasks);
     } catch (e) {
+        // console.log(e);
         res.status(500).send();
     }
 });

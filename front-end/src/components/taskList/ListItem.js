@@ -2,34 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startCompleteTask, startRemoveOne, completeTask } from '../../store/task-actions';
 
-const ListItem = (props) => {
-    const className = props.completed ? 'completed list-item' : 'list-item';
+const ListItem = ({ dispatch, ...task}) => {
+    const className = task.completed ? 'completed list-item' : 'list-item';
 
     return (
         <div 
             className={className} 
             onClick={(e) => {
                 if (e.target.id !== 'completed-checkbox' && e.target.id !== 'delete-btn') {
-                    props.dispatch(startCompleteTask(props._id));
+                    dispatch(startCompleteTask(task._id));
                 }
             }}
         >   
-            <p>{props.text}</p>
+            <p>{task.text}</p>
             <div className="list-item__btns">
                 <input 
                     type="checkbox" 
                     id="completed-checkbox"
                     className="list-item__checkbox"
-                    checked={props.completed}
+                    checked={task.completed}
                     onChange={() =>{
-                        props.dispatch(startCompleteTask(props._id));
+                        dispatch(startCompleteTask(task._id));
                     }} 
                 />
-                <button onClick={(e) => {
-                    props.dispatch(startRemoveOne(props._id));
-                }}
+                <button
                     className="list-item__delete"
                     id="delete-btn"
+                    onClick={() => {
+                        dispatch(startRemoveOne(task._id));
+                    }}
                 >
                     X
                 </button>

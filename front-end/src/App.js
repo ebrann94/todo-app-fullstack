@@ -11,9 +11,9 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         
-        // if (localStorage.getItem('token') || localStorage.getItem('token') === 'undefined') {
-        //     props.dispatch(getUserInfo());
-        // }
+        if (localStorage.getItem('token') || localStorage.getItem('token') === 'undefined') {
+            props.dispatch(getUserInfo());
+        }
     }
 
     render() {

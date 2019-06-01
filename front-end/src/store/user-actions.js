@@ -7,6 +7,13 @@ export const loginPending = () => {
     }
 };
 
+const loginError = (error) => {
+    return {
+        type: 'LOGIN_ERROR',
+        error
+    }
+};
+
 const login = ({firstName, lastName, email, _id}, token) => {
     return {
         type: 'LOGIN_SUCCESS',
@@ -17,13 +24,6 @@ const login = ({firstName, lastName, email, _id}, token) => {
             _id
         },
         token
-    }
-};
-
-const loginError = (error) => {
-    return {
-        type: 'LOGIN_ERROR',
-        error
     }
 };
 
@@ -45,7 +45,7 @@ export const startLogin = (userInfo) => {
             dispatch(populateTasks(tasks));
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             dispatch(loginError('Incorrect Password or Email'))
         });
     }
@@ -63,8 +63,10 @@ export const startLogout = () => {
             if (res.ok) {
                 dispatch({type: 'LOGOUT_SUCCESS'});
                 localStorage.removeItem('token');
+            } else {
+
             }
-        })
+        });
     }
 };
 
@@ -92,6 +94,7 @@ export const startSignup = (data) => {
 
 export const getUserInfo = () => {
     return dispatch => {
+        dispatch(loginPending());
         fetch('/blah/users/me', {
             method: 'GET',
             headers: {

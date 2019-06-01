@@ -59,7 +59,7 @@ export const removeOne = (id) => {
 
 export const startRemoveOne = (id) => {
     return dispatch => {
-        fetch(`/blah/tasks/${id}`, {
+        fetch(`/blah/tasks/one/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -71,7 +71,7 @@ export const startRemoveOne = (id) => {
         })
         .catch(error => {
             console.log(error);
-        })
+        });
     }
 };
 

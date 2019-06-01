@@ -5,7 +5,7 @@ const defaultState = [{
     completed: false,
 }];
 
-export default (state = defaultState, action) => {
+export default (state = [], action) => {
     switch (action.type) {
         case 'ADD_TASK_SUCCESS':    
             return [...state, action.task];

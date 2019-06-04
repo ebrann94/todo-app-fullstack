@@ -2,17 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogin } from '../../store/user-actions';
+import LoadingSpinner from '../LoadingSpinner';
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.defaultState = {
             fields: {
                 email: '',
                 password: ''
             }
         };
+
+        this.state = this.defaultState;
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,13 +44,16 @@ class LoginPage extends React.Component {
             this.setState({error: 'Please fill out all fields!'});
         } else {
             this.props.dispatch(startLogin(userInfo));
-            e.target.reset();
         }
 
     }
 
-    componentDidUpdate() {
-        console.log(this.state);
+    componentDidUpdate(prevProps) {
+        // console.log(prevProps);
+        // console.log(this.state);
+        if (this.props.loginError && (prevProps.loginError !== this.props.loginError)) {
+            this.setState(this.defaultState);
+        }
     }
 
     render() {
@@ -64,7 +70,7 @@ class LoginPage extends React.Component {
                             <input
                                 type="text"
                                 name="email"
-                                value={this.state.email}
+                                value={this.state.fields.email}
                                 onChange={this.handleInputChange}
                             />
                         </div>
@@ -73,12 +79,15 @@ class LoginPage extends React.Component {
                             <input
                                 type="password"
                                 name="password"
-                                value={this.state.password}
+                                value={this.state.fields.password}
                                 onChange={this.handleInputChange}
                             />
                         </div>
-                        <input type="submit" value="Login" className="login__submit"/>
+                        {this.props.loginPending ? <LoadingSpinner width="100%" /> : <input type="submit" value="Login" className="login__submit"/>}
                     </form>
+                    {/*{*/}
+                    {/*    this.props.loginPending && <LoadingSpinner />*/}
+                    {/*}*/}
                     <div className="login__error">
                         <p>{this.state.error}</p>
                         <p>{this.props.loginError}</p>
@@ -92,7 +101,7 @@ class LoginPage extends React.Component {
     
         );
     }
-};
+}
 
 const mapStateToProps = (state) => {
     return {

@@ -29,14 +29,14 @@ export default (state = defaultState, action) => {
     switch (action.type) {
         case 'LOGIN_PENDING':
             return {
-                logInPending: true
+                loginPending: true
             };
         case 'LOGIN_SUCCESS':
             return {
                 clientToken: action.token,
                 user: action.user,
                 loggedIn: true,
-                logInPending: false
+                loginPending: false
             };
         case 'LOGOUT_SUCCESS':
             return {
@@ -44,7 +44,7 @@ export default (state = defaultState, action) => {
             };
         case 'LOGIN_ERROR' :
             return {
-                logInPending: false,
+                loginPending: false,
                 loginError: action.error
             };
         default: 

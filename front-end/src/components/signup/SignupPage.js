@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startSignup } from '../../store/user-actions';
 import { withRouter } from 'react-router';
 import {Link} from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
 
 class SignupPage extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class SignupPage extends React.Component {
                 password: ''
             },
             error: ''
-        }
+        };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,7 +63,7 @@ class SignupPage extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log(this.state);
+        // console.log(this.state);
     }
 
     render() {
@@ -115,7 +116,7 @@ class SignupPage extends React.Component {
                             />
                         </div>
                         {this.state.error && <p className="login__error">{this.state.error}</p>}
-                        <input type="submit" value="Sign Up" className="login__submit"/>
+                        {this.props.loginPending ? <LoadingSpinner width="100%" /> : <input type="submit" value="Sign Up" className="login__submit"/>}
                     </form>
                     <div className="login__signup-link">
                         <p>Already have an account? </p>
@@ -127,4 +128,10 @@ class SignupPage extends React.Component {
     }
 }
 
-export default withRouter(connect()(SignupPage));
+const mapStateToProps = (state) => {
+    return {
+        ...state.user
+    }
+};
+
+export default connect(mapStateToProps)(SignupPage);

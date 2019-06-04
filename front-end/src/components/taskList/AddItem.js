@@ -23,7 +23,7 @@ const AddItem = ({ dispatch }) => {
                         setNewTask(e.target.value);
                     }}
                 />
-                <button className="add-item__btn">Add Item</button>
+                <button className="add-item__btn">Add Task</button>
             </form>
         </div>
     );

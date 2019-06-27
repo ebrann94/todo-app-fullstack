@@ -41,6 +41,23 @@ const UserSchema = new mongoose.Schema({
             required: true
         }
     }]
+}, {
+    toObject: {
+        transform: function(doc, ret) {
+            // delete ret._id;
+            delete ret.password;
+            delete ret.tokens;
+            delete ret.__v;
+        },
+    },
+    toJSON: {
+        transform: function(doc, ret) {
+            // delete ret._id;
+            delete ret.password;
+            delete ret.tokens;
+            delete ret.__v;
+        },
+    }
 });
 
 // Function to create a JSON web token and add it to the tokens array
@@ -51,10 +68,10 @@ UserSchema.methods.generateAuthToken = async function() {
     await this.save();
 
     return token;
-}
+};
 
-UserSchema.virtual('tasks', {
-    ref: 'Task',
+UserSchema.virtual('lists', {
+    ref: 'List',
     localField: '_id',
     foreignField: 'owner'
 });
@@ -76,7 +93,7 @@ UserSchema.statics.findByCredentials = async function(email, password) {
 
     return user;
 
-}
+};
 
 // Converts the password to a hash when the document is saved
 UserSchema.pre('save', async function(next) {

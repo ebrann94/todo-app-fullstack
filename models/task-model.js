@@ -10,9 +10,22 @@ const TaskSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    owner: {
+    list: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+    }
+}, {
+    toObject: {
+        transform: function(doc, ret) {
+            delete ret.list;
+            delete ret.__v;
+        }
+    },
+    toJSON: {
+        transform: function(doc, ret) {
+            delete ret.list;
+            delete ret.__v;
+        }
     }
 });
 

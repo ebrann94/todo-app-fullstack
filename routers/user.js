@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const User = require('../models/user-model');
 const auth = require('../middleware/auth');
+const { documentArrayToObjects } = require('../utils/utils');
 
 const router = new Router();
 
@@ -19,10 +20,17 @@ router.post('/users/signup', async (req, res) => {
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password);
-        await user.populate('tasks').execPopulate();
+        await user.populate({
+            path: 'lists',
+            populate: { path: 'tasks' }
+        }).execPopulate();
         const token = await user.generateAuthToken();
 
-        res.send({ user, token, tasks: user.tasks });
+        res.send({
+            user,
+            lists: documentArrayToObjects(user.lists),
+            token
+        });
     } catch (e) {
         res.status(400).send(e);
     }
@@ -30,7 +38,7 @@ router.post('/users/login', async (req, res) => {
 
 router.post('/users/logout', auth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.map(token => token !== req.token);
+        req.user.tokens = req.user.tokens.filter(token => token !== req.token);
         req.user.save();
 
         res.send();
@@ -40,12 +48,15 @@ router.post('/users/logout', auth, async (req, res) => {
 });
 
 router.get('/users/me', auth, async (req, res) => {
-    // console.log('Me route active')
     try {
-        await req.user.populate('tasks').execPopulate();
+        await req.user.populate({
+            path: 'lists',
+            populate: { path: 'tasks' }
+        }).execPopulate();
+
         res.send({
             user: req.user,
-            tasks: req.user.tasks
+            lists: documentArrayToObjects(req.user.lists)
         });
     } catch (e) {
         res.status(404).send();

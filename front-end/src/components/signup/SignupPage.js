@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startSignup } from '../../store/user-actions';
-import { withRouter } from 'react-router';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
 
 class SignupPage extends React.Component {

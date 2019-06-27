@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 require('./db/db');
 const userRouter = require('./routers/user');
+const listRouter = require('./routers/list');
 const todoRouter = require('./routers/task');
 
 // Server Setup
@@ -18,8 +19,9 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.static(publicPath));
-app.use('/blah', userRouter);
-app.use('/blah', todoRouter);
+app.use('/api', userRouter);
+app.use('/api', listRouter);
+app.use('/api', todoRouter);
 // app.use(express.static(publicPath));
 
 app.listen(port, () => {

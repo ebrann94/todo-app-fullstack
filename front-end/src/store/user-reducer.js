@@ -9,7 +9,8 @@ const defaultState = {
     },
     loggedIn: false,
     loginPending: false,
-    loginError: ''
+    loginError: '',
+    currentListId: ''
 };
 
 const devState = {
@@ -46,6 +47,11 @@ export default (state = defaultState, action) => {
             return {
                 loginPending: false,
                 loginError: action.error
+            };
+        case 'SET_CURRENT_LIST':
+            return {
+                ...state,
+                currentListId: action.listId
             };
         default: 
             return {

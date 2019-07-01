@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import TaskListPage from './components/taskList/TaskListPage';
+import TaskListPage from './components/task-list-page/TaskListPage';
 import LoginPage from './components/login/LoginPage';
 import SignupPage from './components/signup/SignupPage';
 import { getUserInfo } from './store/user-actions';
@@ -25,7 +25,7 @@ class App extends React.Component {
                         exact={true}
                         render={(routeProps) => (
                             this.props.loggedIn ? (
-                                <TaskListPage />
+                                <TaskListPage {...routeProps}/>
                             ) : (
                                 <Redirect to="/login"/>
                             )
@@ -33,21 +33,21 @@ class App extends React.Component {
                     />
                     <Route
                         path="/login"
-                        render={() => (
+                        render={(routeProps) => (
                             this.props.loggedIn ? (
                                 <Redirect to="/"/>
                             ) : (
-                                <LoginPage/>
+                                <LoginPage {...routeProps}/>
                             )
                         )}
                     />
                     <Route
                         path="/signup"
-                        render={() => (
+                        render={(routeProps) => (
                             this.props.loggedIn ? (
                                 <Redirect to="/"/>
                             ) : (
-                                <SignupPage/>
+                                <SignupPage {...routeProps}/>
                             )
                         )}
                     />

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/configure-store';
 import { Provider } from 'react-redux';
 import App from './App';
-import './styles/styles.scss';
+// import './styles/styles.scss';
 
 const store = configureStore();
 const jsx = (

@@ -18,7 +18,6 @@ const List = ({ tasks }) => {
                                 <div className="list-item-wrapper"  >
                                     <ListItem
                                         {...task}
-
                                     />
                                 </div>
                             </CSSTransition>

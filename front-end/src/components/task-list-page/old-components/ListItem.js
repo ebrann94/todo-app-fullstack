@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startCompleteTask, startRemoveOne, completeTask } from '../../store/task-actions';
+import { startCompleteTask, startRemoveOne, completeTask } from '../../../store/task-actions';
 
 const ListItem = ({ dispatch, ...task}) => {
     const className = task.completed ? 'completed list-item' : 'list-item';

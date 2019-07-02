@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import { startDeleteTask, startEditTask } from '../../../store/task-actions';
 
-const TaskListItem = ({ dragStart, dragEnd, index, item }) => {
+const TaskListItem = ({ dispatch, dragStart, dragEnd, index, item, currentListId }) => {
     const [inputText, setInputText] = useState(item.text);
     const textField = useRef(null);
 
@@ -16,7 +17,7 @@ const TaskListItem = ({ dragStart, dragEnd, index, item }) => {
             <div className='task__left'>
                 <div
                     className={item.completed ? 'task__check-mark task__check-mark--completed': 'task__check-mark'}
-                    // onClick={() => dispatch(completeItem)}
+                    onClick={() => dispatch(startEditTask(currentListId, item._id, { completed: !item.completed }))}
                 >
                 </div>
                 <p
@@ -25,7 +26,7 @@ const TaskListItem = ({ dragStart, dragEnd, index, item }) => {
                     suppressContentEditableWarning={true}
                     ref={textField}
                     onInput={(e) => setInputText(e.target.textContent)}
-                    // onBlur={() => dispatch(editTaskAction())}
+                    onBlur={() => dispatch(startEditTask(currentListId, item._id, { text: inputText }))}
                     onKeyDown={e => {
                         if (e.keyCode === 13) {
                             e.preventDefault();
@@ -40,7 +41,7 @@ const TaskListItem = ({ dragStart, dragEnd, index, item }) => {
                 <button
                     name="delete-btn"
                     className="task__delete"
-                    // onClick={() => dispatch(deleteTaskAction())}
+                    onClick={() => dispatch(startDeleteTask(currentListId, item._id))}
                 >
                     X
                 </button>
@@ -50,4 +51,8 @@ const TaskListItem = ({ dragStart, dragEnd, index, item }) => {
     )
 };
 
-export default connect()(TaskListItem);
+const mapStateToProps = state => ({
+    currentListId: state.user.currentListId
+});
+
+export default connect(mapStateToProps)(TaskListItem);

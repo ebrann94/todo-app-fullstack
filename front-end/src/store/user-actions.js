@@ -1,4 +1,5 @@
 import { populateTasks } from './task-actions';
+import { populateLists } from "./list-actions";
 import { handleResponse } from "./utils";
 
 export const loginPending = () => {
@@ -31,7 +32,7 @@ export const startLogin = (userInfo) => {
     return (dispatch) => {
         dispatch(loginPending());
         // Login route
-        fetch('/blah/users/login', {
+        fetch('/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -39,10 +40,11 @@ export const startLogin = (userInfo) => {
             body: JSON.stringify(userInfo)
         })
         .then(handleResponse)
-        .then(({ user, token, tasks }) => {
+        .then(({ user, token, lists }) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
-            dispatch(populateTasks(tasks));
+            console.log(lists);
+            dispatch(populateLists(lists));
         })
         .catch(err => {
             // console.log(err);
@@ -53,7 +55,7 @@ export const startLogin = (userInfo) => {
 
 export const startLogout = () => {
     return (dispatch) => {
-        fetch('/blah/users/logout', {
+        fetch('/api/users/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -61,19 +63,16 @@ export const startLogout = () => {
         })
         .then(res => {
             if (res.ok) {
-                dispatch({type: 'LOGOUT_SUCCESS'});
-                localStorage.removeItem('token');
-            } else {
-
+                dispatch({ type: 'LOGOUT_SUCCESS'})
             }
-        });
+        })
     }
 };
 
 export const startSignup = (data) => {
     return dispatch => {
         dispatch(loginPending());
-        fetch('/blah/users/signup', {
+        fetch('/api/users/signup', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -82,6 +81,7 @@ export const startSignup = (data) => {
         })
         .then(handleResponse)
         .then(({user, token}) => {
+            console.log(user, token);
             localStorage.setItem('token', token);
             dispatch(login(user, token));
         })
@@ -95,16 +95,19 @@ export const startSignup = (data) => {
 export const getUserInfo = () => {
     return dispatch => {
         dispatch(loginPending());
-        fetch('/blah/users/me', {
+        fetch('/api/users/me', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
         .then(handleResponse)
-        .then(({ user, tasks}) => {
+        .then(({ user, lists}) => {
             dispatch(login(user));
-            dispatch(populateTasks(tasks));
+            console.log(lists);
+            if (lists.length > 0) {
+                dispatch(populateLists(lists));
+            }
         }).catch(error => {
             console.log(error);
         })
@@ -112,6 +115,7 @@ export const getUserInfo = () => {
 };
 
 export const setCurrentList = listId => {
+    // console.log(listId);
     return {
         type: 'SET_CURRENT_LIST',
         listId

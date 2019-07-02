@@ -63,15 +63,17 @@ const ReOrderableList = ({ items, className }) => {
             onDragEnter={dragOver}
         >
             {
-                items.map((item, i) => (
-                    <TaskListItem
-                        key={item.id}
-                        dragStart={dragStart}
-                        dragEnd={dragEnd}
-                        index={i}
-                        item={item}
-                    />
-                ))
+                items.map((item, i) => {
+                    return (
+                        <TaskListItem
+                            key={item._id}
+                            dragStart={dragStart}
+                            dragEnd={dragEnd}
+                            index={i}
+                            item={item}
+                        />
+                    )
+                })
             }
         </ul>
     )

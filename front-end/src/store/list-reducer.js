@@ -2,18 +2,19 @@ import { updateListItemsById } from './utils';
 
 const devState = [{
     id: '1234',
-    name: 'Things ToDo',
+    name: 'Things To Do',
     description: 'Really important things to do',
     tasks : [
         {
-            id: '53242',
+            _id: '53242',
             text: 'Washing Up',
             completed: false
         }
     ]
 }];
 
-export default (state = [], action) => {
+export default (state = devState, action) => {
+    // console.log(action);
     switch (action.type) {
         case 'ADD_LIST':
             return state.concat(action.newList);
@@ -33,18 +34,14 @@ export default (state = [], action) => {
             });
         case 'ADD_TASK_SUCCESS':    
             return updateListItemsById(state, action.listId, items => [...items, action.task]);
-        case 'COMPLETE_TASK':
+        case 'EDIT_TASK':
             return updateListItemsById(state, action.listId, items => {
-                return items.map(task => task._id === action._id ? action.task : task)
+                return items.map(task => task.id === action.task.id ? action.task : task)
             });
         case 'DELETE_TASK':
             return updateListItemsById(state, action.listId, items => {
                 return items.filter(task => task._id !== action.taskId);
             });
-        // case 'REMOVE_COMPLETED':
-        //     return state.filter(task => !task.completed);
-        // case 'REMOVE_ALL':
-        //     return [];
         case 'POPULATE_LISTS':
             return [...action.lists];
         default :

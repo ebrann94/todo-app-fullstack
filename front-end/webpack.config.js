@@ -37,7 +37,7 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         historyApiFallback: true,
         proxy: {
-            '/blah': {
+            '/api': {
                 target: 'http://localhost:3000',
                 secure: false
             }

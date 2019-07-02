@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import UserListsItem from './UserListItem';
 import AddItem from '../AddItem';
+import { startAddList } from '../../../store/list-actions';
 
-const UserLists = ({ lists, currentList }) => {
+const UserLists = ({ dispatch, lists, currentList }) => {
     return (
         <div className="user-lists-container">
             <h2 className="user-lists__title">My Lists</h2>
@@ -20,15 +21,16 @@ const UserLists = ({ lists, currentList }) => {
                 }
             </ul>
             <AddItem
-                // action={addListAction}
                 className="add-list"
+                actionCreator={startAddList}
+                placeholder="Add New List"
             />
         </div>
     )
 };
 
 const mapStateTopProps = state => ({
-
+    lists: state.lists
 });
 
 export default connect(mapStateTopProps)(UserLists);

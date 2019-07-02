@@ -25,6 +25,7 @@ router.post('/lists/add-list', auth, async (req, res) => {
    try {
        const list = new List({
            ...req.body,
+           name: req.body.name,
            owner: req.user._id
        });
        await list.save();
@@ -34,17 +35,20 @@ router.post('/lists/add-list', auth, async (req, res) => {
    }
 });
 
-router.delete('/lists/:id', auth, async (res, req) => {
+router.delete('/lists/:id', auth, async (req, res) => {
+    console.log(req.params.id);
    try {
-       await List.findOneAndDelete({ _id: req.listId });
+       const list = await List.findOneAndDelete({ _id: req.params.id });
+       // Need to delete corresponding tasks as well.
 
-       res.send();
+       res.send(list);
    } catch (e) {
-        res.status(500).send();
+       console.log(e);
+       res.status(500).send();
    }
 });
 
-router.patch('/lists/:id', auth, async (req, res) => {
+router.put('/lists/:id', auth, async (req, res) => {
     try {
         const list = await List.findOne({ _id: req.params.id });
 

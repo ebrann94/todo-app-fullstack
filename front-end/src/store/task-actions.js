@@ -8,11 +8,11 @@ export const addTask = (listId, task) => {
     }
 };
 
-export const startAddTask = (text) => {
+export const startAddTask = (listId, text) => {
     return dispatch => {
-        fetch('/blah/tasks/add-task', {
+        fetch('/api/tasks/add-task', {
             method: 'POST',
-            body: JSON.stringify({ text }),
+            body: JSON.stringify({ listId, text }),
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -20,7 +20,7 @@ export const startAddTask = (text) => {
         })
         .then(handleResponse)
         .then(data => {
-            dispatch(addTask(data))
+            dispatch(addTask(listId, data))
         })
         .catch(error => {
             console.log(error);
@@ -28,41 +28,46 @@ export const startAddTask = (text) => {
     }
 };
 
-export const completeTask = (listId, task) => {
+export const editTask = (listId, task) => {
     return {
-        type: 'COMPLETE_TASK',
+        type: 'EDIT_TASK',
         task,
         listId
     }
 };
 
-export const startCompleteTask = (id) => {
+export const startEditTask = (listId, taskId, edits )=> {
     return dispatch => {
-        fetch(`/blah/tasks/${id}`, {
+        fetch(`/api/tasks/${taskId}`, {
             method: 'PATCH',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(edits)
         })
-        .then(handleResponse)
-        .then(task => {
-            // console.log(task);
-            dispatch(completeTask(task))
-        })
+            .then(handleResponse)
+            .then(task => {
+                // console.log(task);
+                dispatch(editTask(listId, task))
+            })
+            .catch(e => {
+                console.log(e);
+            })
     }
 };
 
 export const removeOne = (listId, taskId) => {
     return {
         type: 'DELETE_TASK',
-        taskId,
-        listId
+        listId,
+        taskId
     }
 };
 
-export const startDeleteTask = (id) => {
+export const startDeleteTask = (listId, id) => {
     return dispatch => {
-        fetch(`/blah/tasks/one/${id}`, {
+        fetch(`/api/tasks/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -70,7 +75,7 @@ export const startDeleteTask = (id) => {
         })
         .then(handleResponse)
         .then(task => {
-            dispatch(removeOne(task._id))
+            dispatch(removeOne(listId, task._id));
         })
         .catch(error => {
             console.log(error);

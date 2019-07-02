@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const url = process.env.MONGODB_URL;
-
+//mongodb+srv://todoapp:cookies123@todoapp-fvubl.mongodb.net/todoapp?retryWrites=true
 mongoose.connect(url,{
     useNewUrlParser: true,
     useCreateIndex: true,

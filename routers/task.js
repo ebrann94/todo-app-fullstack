@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const router = new Router();
 
 router.post('/tasks/add-task', auth, async (req, res) => {
-
+    console.log(req.body);
     const task = new Task({
         text: req.body.text,
         list: req.body.listId
@@ -42,11 +42,10 @@ router.delete('/tasks/:id', auth, async (req, res) => {
     }
 });
 
-
 router.patch('/tasks/:id', auth, async (req, res) => {
 
     try {
-        const task = await Task.findOne({ _id: req.params.id });
+        const task = await Task.findOne({_id: req.params.id});
 
         if (req.body.text) {
             task.text = req.body.text;

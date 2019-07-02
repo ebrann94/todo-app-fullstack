@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { startAddTask } from '../../store/task-actions';
 
-const AddItem = ({ dispatch, className, placeholder, action }) => {
+const AddItem = ({ dispatch, className, placeholder, actionCreator }) => {
     const [inputText, setInputText] = useState('');
     const [isActive, setIsActive] = useState(false);
 
@@ -15,7 +14,7 @@ const AddItem = ({ dispatch, className, placeholder, action }) => {
                         onSubmit={e => {
                             e.preventDefault();
                             if (inputText.length > 0) {
-                                // dispatch(action(inputText));
+                                dispatch(actionCreator(inputText));
                                 setInputText('');
                                 setIsActive(false);
                             }

@@ -1,15 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setCurrentList } from "../../../store/user-actions";
 
-const UserListsItem = ({ id, name, isCurrent }) => {
+const UserListsItem = ({ dispatch, id, name, isCurrent }) => {
     const classNames = isCurrent ? 'current-list' : '';
     return (
         <li
             className={'my-lists-item ' + classNames}
-            // onClick={() => dispatch(selectListAction(id))}
+            onClick={() => dispatch(setCurrentList(id))}
         >
             <p className="user-lists-item__text">{name}</p>
         </li>
     )
 };
 
-export default UserListsItem;
+export default connect()(UserListsItem);

@@ -10,20 +10,22 @@ export const addList = (newList) => {
     }
 };
 
-export const startAddList = () => dispatch => {
+export const startAddList = (listName) => dispatch => {
         fetch('/api/lists/add-list', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({ name: listName })
         })
             .then(handleResponse)
             .then(res => {
-                dispatch(addList());
+                console.log(res);
+                dispatch(addList(res));
             })
             .catch(e => {
-
+                console.log(e);
             })
 
 };
@@ -36,16 +38,16 @@ export const deleteList = (listId) => {
 };
 
 export const startDeleteList = listId => dispatch => {
-    fetch('/api/lists', {
+    fetch(`/api/lists/${listId}`, {
         method: 'DELETE',
         headers: {
-
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(listId)
     })
         .then(handleResponse)
         .then(res => {
-            dispatch(deleteList())
+            console.log(res);
+            dispatch(deleteList(listId))
         })
         .catch(e => {
 

@@ -1,4 +1,4 @@
-import { handleResponse } from './utils.js';
+import { handleJSONResponse } from './utils.js';
 
 export const addList = (newList) => {
     return {
@@ -19,7 +19,7 @@ export const startAddList = (listName) => dispatch => {
             },
             body: JSON.stringify({ name: listName })
         })
-            .then(handleResponse)
+            .then(handleJSONResponse)
             .then(res => {
                 console.log(res);
                 dispatch(addList(res));
@@ -44,7 +44,7 @@ export const startDeleteList = listId => dispatch => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
     })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(res => {
             console.log(res);
             dispatch(deleteList(listId))
@@ -54,27 +54,40 @@ export const startDeleteList = listId => dispatch => {
         })
 };
 
-export const editList = (listId, changes) => {
+export const editList = (list) => {
     return {
         type: 'EDIT_LIST',
+        list,
+    }
+};
+
+export const replaceTasks = (listId, tasks) => {
+    return {
+        type: 'REPLACE_TASKS',
         listId,
+        tasks
     }
 };
 
 export const startEditList = (listId, edits) => {
-    const body = {};
+    const body = {
+        ...edits,
+        tasks: edits.tasks.map(task => task._id)
+    };
 
     return dispatch => {
-        fetch('/api/lists', {
-            method: 'PUT',
+        fetch(`/api/lists/${listId}`, {
+            method: 'PATCH',
             headers: {
-
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(body)
         })
-            .then(handleResponse)
+            .then(handleJSONResponse)
             .then(res => {
-                dispatch(editList());
+                // console.log(res);
+                dispatch(editList(res));
             })
             .catch(e => {
 

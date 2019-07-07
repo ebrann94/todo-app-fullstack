@@ -5,17 +5,15 @@
     border-radius: $border-radius;
     
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
 .login-card {
-    margin: auto;
+    margin: 48px auto;
     padding: 0 16px;
     background: white;
 
-    border-radius: $border-radius;
-    box-shadow: $grey-shadow;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 
     display: flex;
     flex-direction: column;
@@ -42,7 +40,7 @@
     input {
         width: 100%;
         padding: 8px;
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: $text-grey;
         border: solid lightgrey;
         border-width: 2px 1px 1px 2px;
@@ -53,7 +51,7 @@
     label {
         display: block;
         margin: 0 0 8px 0;
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: lighten($text-grey, 40%);
     }
 }
@@ -62,32 +60,30 @@
     width: 128px;
     margin: 16px auto 32px auto;
     padding: 8px;
-    font-size: 1.5rem;
+    font-size: 1rem;
 
-    background-image: linear-gradient(#2dabf9, #0688fa);
+    background: $background;
     color: white;
     border: none;
-    border-radius: $border-radius;
 
     cursor: pointer;
 }
 
 .login__submit:hover {
-    box-shadow: $grey-shadow;
+    background: lighten($background, 20%);
 }
 
 .login__error {
     text-align: center;
     color: #f43535;
-
-    font-size: 1.2rem;
+    margin: 0 0 8px 0;
 }
 
 .login__signup-link {
     margin:  0 0 16px 0;
     text-align: center;
+    font-size: 12px;
 
-    font-size: 1.2rem;
     color: lighten($text-grey, 40%);
 
     p {

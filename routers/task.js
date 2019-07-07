@@ -1,18 +1,24 @@
 const { Router } = require('express');
 const Task = require('../models/task-model');
+const List = require('../models/list-model');
 const auth = require('../middleware/auth');
 
 const router = new Router();
 
 router.post('/tasks/add-task', auth, async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const task = new Task({
         text: req.body.text,
         list: req.body.listId
     });
 
     try {
-        await task.save();
+        // await List.findByIdAndUpdate(req.body.listId, { $push: { tasks: task._id}});
+        // await task.save();
+        await Promise.all([
+            List.findByIdAndUpdate(req.body.listId, { $push: { tasks: task._id}}),
+            task.save()
+        ]);
         res.status(201).send(task);
     } catch (e) {
         console.log(e);
@@ -32,8 +38,8 @@ router.get('/tasks', auth, async (req, res) => {
 
 router.delete('/tasks/:id', auth, async (req, res) => {
     try {
-        console.log(req.user);
-        const task = await Task.findOneAndDelete({ _id: req.params.id });
+        // console.log(req.user);
+        const task = await Task.findByIdAndDelete( req.params.id );
 
         res.send(task);
     } catch (e) {

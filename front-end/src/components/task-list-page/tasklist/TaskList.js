@@ -6,7 +6,6 @@ import { startAddTask } from '../../../store/task-actions';
 import { startDeleteList } from '../../../store/list-actions';
 
 const TaskList = ({ dispatch, list }) => {
-    // console.log(list);
 
     const startAddTaskPartial = listId => {
         return text => startAddTask(listId, text);
@@ -25,6 +24,8 @@ const TaskList = ({ dispatch, list }) => {
             </div>
             <ReOrderableList
                 items={list.tasks}
+                listId={list.id}
+                className={'task-list'}
             />
             <AddItem
                 className="add-task"

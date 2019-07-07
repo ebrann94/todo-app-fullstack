@@ -1,4 +1,4 @@
-import { handleResponse } from "./utils";
+import { handleJSONResponse } from "./utils";
 
 export const addTask = (listId, task) => {
     return {
@@ -18,7 +18,7 @@ export const startAddTask = (listId, text) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(data => {
             dispatch(addTask(listId, data))
         })
@@ -46,7 +46,7 @@ export const startEditTask = (listId, taskId, edits )=> {
             },
             body: JSON.stringify(edits)
         })
-            .then(handleResponse)
+            .then(handleJSONResponse)
             .then(task => {
                 // console.log(task);
                 dispatch(editTask(listId, task))
@@ -73,7 +73,7 @@ export const startDeleteTask = (listId, id) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(task => {
             dispatch(removeOne(listId, task._id));
         })
@@ -82,55 +82,3 @@ export const startDeleteTask = (listId, id) => {
         });
     }
 };
-
-// export const removeAll = () => {
-//     return {
-//         type: 'REMOVE_ALL'
-//     }
-// };
-
-// export const startRemoveAll = () => {
-//     return dispatch => {
-//         fetch('/blah/tasks', {
-//             method: 'DELETE',
-//             headers: {
-//                 'Authorization': `Bearer ${localStorage.getItem('token')}`
-//             }
-//         }).then(res => {
-//             if (res.ok) {
-//                 dispatch(removeAll());
-//             }
-//         })
-//     }
-// };
-//
-// export const removeCompleted = (tasks) => {
-//     return {
-//         type: 'REMOVE_COMPLETED'
-//     }
-// };
-//
-// export const startRemoveCompleted = () => {
-//     return dispatch => {
-//         fetch('/blah/tasks/completed', {
-//             method: 'DELETE',
-//             headers: {
-//                 'Authorization': `Bearer ${localStorage.getItem('token')}`
-//             }
-//         })
-//         .then(handleResponse)
-//         .then(tasks => {
-//             dispatch(removeCompleted());
-//         })
-//         .catch(error => {
-//             console.log(error);
-//         });
-//     }
-// };
-//
-// export const populateTasks = (tasks) => {
-//     return {
-//         type: 'POPULATE_TASKS',
-//         tasks
-//     }
-// };

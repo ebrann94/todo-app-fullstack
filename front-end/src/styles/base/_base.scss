@@ -2,48 +2,22 @@
     box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
-
-html {
-    font-size: 62.5%;
-    margin: 0;
-}
-
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 body {
-     //font-family: 'futura', arial, sans-serif;
-    font-family: 'Raleway', sans-serif;
-
-    font-size: $m-size;
+    font-family: 'Roboto', sans-serif;
     color: $text-grey;
 
-    background: linear-gradient(356deg, rgba(6,0,113,1) 0%, rgba(22,22,144,1) 7%, rgba(16,74,182,1) 24%, rgba(16,153,217,1) 100%);
-    min-height: 100vh;
     height: 100%;
+    margin: 0;
+
+    -webkit-font-smoothing: antialiased;
+
+    line-height: 1;
 }
 
-button {
-    cursor: pointer;
-    background-image: linear-gradient(#2dabf9, #0688fa);
-    color: white;
-    font-family: 'Raleway', sans-serif;
-
-    border-radius: $border-radius;
-    border: none;
-}
-
-button:disabled {
-    cursor: default;
-}
-
-button:hover {
-  box-shadow: $grey-shadow;
-}
-
-button:active {
-  border: #0688fa solid;
-  border-width: 0 2px 2px 0;
-  background-image: linear-gradient(lighten(#2dabf9, 5%), lighten(#0688fa, 5%));
+ul {
+    padding: 0;
+    margin: 0;
 }
 
 p {

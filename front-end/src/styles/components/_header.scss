@@ -6,34 +6,6 @@
 
     h1 {
         margin: $m-size;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     }
-}
-
-.user-info {
-    padding: 8px;
-    position: absolute;
-    right: 0;
-    top: 0;
-
-    font-family: 'Raleway', sans-serif;
-    font-size: $s-size;
-
-    text-align: right;
-
-    //display: flex;
-
-}
-
-.user-info__name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0 0 0 4px;
-}
-
-
-.logout-btn {
-    background: none;
-    text-decoration: underline;
-    padding: 0;
-    margin: 8px 0 0 0;
 }

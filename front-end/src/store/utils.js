@@ -1,4 +1,4 @@
-export const handleResponse = (res) => {
+export const handleJSONResponse = (res) => {
     if (res.ok) {
         return res.json();
     } else {

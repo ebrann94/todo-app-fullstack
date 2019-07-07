@@ -12,7 +12,11 @@ const ListSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-    }
+    },
+    tasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }]
 }, {
     toObject: {
         transform: function(doc, ret) {
@@ -32,10 +36,10 @@ const ListSchema = new mongoose.Schema({
     }
 });
 
-ListSchema.virtual('tasks', {
-    ref: 'Task',
-    localField: '_id',
-    foreignField: 'list'
-});
+// ListSchema.virtual('tasks', {
+//     ref: 'Task',
+//     localField: '_id',
+//     foreignField: 'list'
+// });
 
 module.exports = mongoose.model('List', ListSchema);

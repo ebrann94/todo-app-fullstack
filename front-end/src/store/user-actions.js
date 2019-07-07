@@ -1,6 +1,5 @@
-import { populateTasks } from './task-actions';
 import { populateLists } from "./list-actions";
-import { handleResponse } from "./utils";
+import { handleJSONResponse } from "./utils";
 
 export const loginPending = () => {
     return {
@@ -39,11 +38,11 @@ export const startLogin = (userInfo) => {
             },
             body: JSON.stringify(userInfo)
         })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(({ user, token, lists }) => {
             localStorage.setItem('token', token);
             dispatch(login(user, token));
-            console.log(lists);
+            // console.log(lists);
             dispatch(populateLists(lists));
         })
         .catch(err => {
@@ -63,7 +62,8 @@ export const startLogout = () => {
         })
         .then(res => {
             if (res.ok) {
-                dispatch({ type: 'LOGOUT_SUCCESS'})
+                dispatch({ type: 'LOGOUT_SUCCESS'});
+                localStorage.removeItem('token');
             }
         })
     }
@@ -79,9 +79,9 @@ export const startSignup = (data) => {
             },
             body: JSON.stringify(data)
         })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(({user, token}) => {
-            console.log(user, token);
+            // console.log(user, token);
             localStorage.setItem('token', token);
             dispatch(login(user, token));
         })
@@ -101,10 +101,10 @@ export const getUserInfo = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(handleResponse)
+        .then(handleJSONResponse)
         .then(({ user, lists}) => {
             dispatch(login(user));
-            console.log(lists);
+            // console.log(lists);
             if (lists.length > 0) {
                 dispatch(populateLists(lists));
             }

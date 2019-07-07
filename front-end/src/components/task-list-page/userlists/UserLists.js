@@ -4,18 +4,18 @@ import UserListsItem from './UserListItem';
 import AddItem from '../AddItem';
 import { startAddList } from '../../../store/list-actions';
 
-const UserLists = ({ dispatch, lists, currentList }) => {
+const UserLists = ({ dispatch, lists, currentListId }) => {
     return (
         <div className="user-lists-container">
             <h2 className="user-lists__title">My Lists</h2>
-            <ul>
+            <ul className="user-lists__list">
                 {
                     lists.map(list => (
                         <UserListsItem
                             key={list.id}
                             id={list.id}
                             name={list.name}
-                            isCurrent={list.id === currentList}
+                            isCurrent={list.id === currentListId}
                         />
                     ))
                 }
@@ -30,7 +30,8 @@ const UserLists = ({ dispatch, lists, currentList }) => {
 };
 
 const mapStateTopProps = state => ({
-    lists: state.lists
+    lists: state.lists,
+    currentListId: state.user.currentListId || state.lists[0].id
 });
 
 export default connect(mapStateTopProps)(UserLists);

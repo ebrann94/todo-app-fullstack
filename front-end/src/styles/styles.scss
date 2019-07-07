@@ -1,10 +1,11 @@
 @import './base/settings';
 @import './base/base';
 @import './components/login-page';
-@import './components/add-item';
-@import './components/app';
+@import 'components/user-info';
+@import './components/task-page';
 @import './components/header';
-@import './components/list';
-@import './components/list-item';
+@import './components/task-list';
+@import './components/task';
+@import './components/user-lists';
 @import './components/remove-items';
 @import './components/loading-spinner';

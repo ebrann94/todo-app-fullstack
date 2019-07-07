@@ -26,7 +26,11 @@ const TaskListItem = ({ dispatch, dragStart, dragEnd, index, item, currentListId
                     suppressContentEditableWarning={true}
                     ref={textField}
                     onInput={(e) => setInputText(e.target.textContent)}
-                    onBlur={() => dispatch(startEditTask(currentListId, item._id, { text: inputText }))}
+                    onBlur={() => {
+                        if (inputText.length > 0 && inputText !== item.text) {
+                            dispatch(startEditTask(currentListId, item._id, { text: inputText }))
+                        }
+                    }}
                     onKeyDown={e => {
                         if (e.keyCode === 13) {
                             e.preventDefault();
@@ -52,7 +56,7 @@ const TaskListItem = ({ dispatch, dragStart, dragEnd, index, item, currentListId
 };
 
 const mapStateToProps = state => ({
-    currentListId: state.user.currentListId
+    currentListId: state.user.currentListId || state.lists[0].id
 });
 
 export default connect(mapStateToProps)(TaskListItem);

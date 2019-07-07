@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import TaskListItem from './tasklist/TaskListItem';
+import { startEditList } from "../../store/list-actions";
 
-const PlaceHolder = document.createElement('li');
-PlaceHolder.className = 'list__placeholder';
+const ReOrderableList = ({ dispatch, items, className, listId }) => {
+    const [list, setList] = useState(items);
 
-const ReOrderableList = ({ items, className }) => {
+    useEffect(() => setList(items), [items]);
+
     const PlaceHolder = document.createElement('li');
     PlaceHolder.className = 'list__placeholder';
 
@@ -51,11 +54,15 @@ const ReOrderableList = ({ items, className }) => {
 
         if (!over) return;
 
-        const data = items;
-        const from = Number(dragged.dataset.index);
+        const data = list;
+        const origin = Number(dragged.dataset.index);
         const to = Number(over.dataset.index);
-        data.splice(to, 0, data.splice(from, 1)[0]);
-        // dispatch(reOderAction());
+        const toMove = data.splice(origin, 1);
+        data.splice(to, 0, toMove[0]);
+        setList([...data]);
+        dispatch(startEditList(listId, {
+            tasks: data
+        }));
     };
     return (
         <ul
@@ -63,7 +70,7 @@ const ReOrderableList = ({ items, className }) => {
             onDragEnter={dragOver}
         >
             {
-                items.map((item, i) => {
+                list.map((item, i) => {
                     return (
                         <TaskListItem
                             key={item._id}
@@ -79,4 +86,4 @@ const ReOrderableList = ({ items, className }) => {
     )
 };
 
-export default ReOrderableList
+export default connect()(ReOrderableList);

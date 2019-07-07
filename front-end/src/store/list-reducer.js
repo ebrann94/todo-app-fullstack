@@ -14,7 +14,7 @@ const devState = [{
 }];
 
 export default (state = devState, action) => {
-    // console.log(action);
+    // console.log(action.type);
     switch (action.type) {
         case 'ADD_LIST':
             return state.concat(action.newList);
@@ -22,21 +22,15 @@ export default (state = devState, action) => {
             return state.filter(list => list.id !== action.listId);
         case 'EDIT_LIST':
             return state.map(list => {
-                if (list.id === action.listId) {
-                    return {
-                        name: action.name || list.name,
-                        description: action.description || list.action,
-                        tasks: list.tasks
-                    };
-                } else {
-                    return list;
-                }
+                return list.id === action.list.id ? action.list : list;
             });
+        case 'REPLACE_TASKS':
+            return updateListItemsById(state, action.listId, () => [...action.tasks]);
         case 'ADD_TASK_SUCCESS':    
             return updateListItemsById(state, action.listId, items => [...items, action.task]);
         case 'EDIT_TASK':
             return updateListItemsById(state, action.listId, items => {
-                return items.map(task => task.id === action.task.id ? action.task : task)
+                return items.map(task => task._id === action.task._id ? action.task : task)
             });
         case 'DELETE_TASK':
             return updateListItemsById(state, action.listId, items => {

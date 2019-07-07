@@ -1,0 +1,67 @@
+.task {
+    max-width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0;
+    padding: 0 0 32px 0;
+
+    //border: 1px solid aquamarine;
+}
+
+.task:hover {
+    .task__delete {
+        opacity: 1;
+    }
+}
+
+.task__left {
+    display: flex;
+    align-items: center;
+}
+
+$check-size: 16px;
+.task__check-mark {
+    height: $check-size;
+    width: $check-size;
+
+    margin-right: 16px;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.task__check-mark--completed {
+    background: rgb(47, 214, 38);
+}
+
+.task__text {
+    cursor: text;
+}
+
+$btn-size: 16px;
+.task__delete {
+    color: #5f6368;
+    width: $btn-size;
+    height: $btn-size;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+
+    border: none;
+    background: none;
+
+    opacity: 0;
+    transition: opacity 0.1s;
+    cursor: pointer;
+}
+
+.task-completed {
+    p {
+        color: rgba(0, 0, 0, 0.3);
+        text-decoration: line-through;
+    }
+}

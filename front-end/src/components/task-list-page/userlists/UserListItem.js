@@ -6,7 +6,7 @@ const UserListsItem = ({ dispatch, id, name, isCurrent }) => {
     const classNames = isCurrent ? 'current-list' : '';
     return (
         <li
-            className={'my-lists-item ' + classNames}
+            className={'user-lists-item ' + classNames}
             onClick={() => dispatch(setCurrentList(id))}
         >
             <p className="user-lists-item__text">{name}</p>

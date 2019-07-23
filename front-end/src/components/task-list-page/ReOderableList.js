@@ -69,7 +69,7 @@ const ReOrderableList = ({ dispatch, items, className, listId }) => {
             className={className}
             onDragEnter={dragOver}
         >
-            {
+            {   list &&
                 list.map((item, i) => {
                     return (
                         <TaskListItem

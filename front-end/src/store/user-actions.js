@@ -66,8 +66,33 @@ export const startLogout = () => {
                 localStorage.removeItem('token');
             }
         })
+        .catch(e => {
+
+        })
+
     }
 };
+
+export const startLogoutAll = () =>
+    dispatch => {
+        fetch('/api/users/logout-all', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                dispatch({ type: 'LOGOUT_SUCCESS'});
+                dispatch({ type: 'RESET_LISTS'});
+                localStorage.removeItem('token');
+            }
+        })
+        .catch(e => {
+
+        })
+
+    };
 
 export const startSignup = (data) => {
     return dispatch => {

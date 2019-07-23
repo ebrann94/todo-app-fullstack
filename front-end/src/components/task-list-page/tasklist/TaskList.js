@@ -14,7 +14,7 @@ const TaskList = ({ dispatch, list }) => {
     return (
         <div className="task-list-container">
             <div className="task-list__top">
-                <h1 className="task-list__title">{list.name.toUpperCase()}</h1>
+                <h1 className="task-list__title">{list.name && list.name.toUpperCase()}</h1>
                 <button
                     className="task-list__delete"
                     onClick={() => dispatch(startDeleteList(list.id))}

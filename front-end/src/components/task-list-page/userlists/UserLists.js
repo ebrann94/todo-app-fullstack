@@ -31,7 +31,7 @@ const UserLists = ({ dispatch, lists, currentListId }) => {
 
 const mapStateTopProps = state => ({
     lists: state.lists,
-    currentListId: state.user.currentListId || state.lists[0].id
+    currentListId: state.user.currentListId || null
 });
 
 export default connect(mapStateTopProps)(UserLists);

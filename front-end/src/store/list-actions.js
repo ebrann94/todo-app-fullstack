@@ -46,7 +46,6 @@ export const startDeleteList = listId => dispatch => {
     })
         .then(handleJSONResponse)
         .then(res => {
-            console.log(res);
             dispatch(deleteList(listId))
         })
         .catch(e => {

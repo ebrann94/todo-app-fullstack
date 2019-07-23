@@ -18,7 +18,7 @@ const App = ({ lists, currentListId }) => {
             </div>
             <main className="main-container">
                 <TaskList
-                    list={list || lists[0]}
+                    list={list || []}
                 />
             </main>
         </div>

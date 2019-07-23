@@ -13,7 +13,9 @@ const devState = [{
     ]
 }];
 
-export default (state = devState, action) => {
+const defaultState = [];
+
+export default (state = defaultState, action) => {
     // console.log(action.type);
     switch (action.type) {
         case 'ADD_LIST':
@@ -38,6 +40,8 @@ export default (state = devState, action) => {
             });
         case 'POPULATE_LISTS':
             return [...action.lists];
+        case 'RESET_LISTS':
+            return defaultState;
         default :
             return state;
     }

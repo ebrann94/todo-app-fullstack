@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { startLogout } from "../../store/user-actions";
+import { startLogout, startLogoutAll } from "../../store/user-actions";
 
 const UserInfo = ({ dispatch, user }) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ const UserInfo = ({ dispatch, user }) => {
                 className="user-info__more"
                 onClick={() => {
                     const clickListener = (e) => {
-                        if (e.target.id !== 'logout-btn') {
+                        if (e.target.classname !== 'user-info__logout-btn') {
                             setMenuOpen(false);
                         }
                         window.removeEventListener('mouseup', clickListener);
@@ -38,7 +38,15 @@ const UserInfo = ({ dispatch, user }) => {
                         dispatch(startLogout());
                     }}
                 >
-                    Logout
+                    Logout This Device
+                </button>
+                <button
+                    className="user-info__logout-btn"
+                    onClick={() => {
+                        dispatch(startLogoutAll());
+                    }}
+                >
+                    Logout All Devices
                 </button>
             </div>
         </div>

@@ -14,10 +14,10 @@ const port = process.env.PORT;
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
-app.use((req, res, next) => {
-    console.log('Request received', req.url, req.method);
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log('Request received', req.url, req.method);
+//     next();
+// });
 app.use(express.static(publicPath));
 app.use('/api', userRouter);
 app.use('/api', listRouter);

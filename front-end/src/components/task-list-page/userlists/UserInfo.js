@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { startLogout, startLogoutAll } from "../../store/user-actions";
+import { startLogout, startLogoutAll } from "../../../store/user-actions";
 
 const UserInfo = ({ dispatch, user }) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -38,7 +38,7 @@ const UserInfo = ({ dispatch, user }) => {
                         dispatch(startLogout());
                     }}
                 >
-                    Logout This Device
+                    Logout
                 </button>
                 <button
                     className="user-info__logout-btn"

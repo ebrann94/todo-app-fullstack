@@ -4,6 +4,8 @@ import ReOrderableList from '../ReOderableList';
 import AddItem from '../AddItem';
 import { startAddTask } from '../../../store/task-actions';
 import { startDeleteList } from '../../../store/list-actions';
+import { setCurrentList } from '../../../store/user-actions';
+import { getCurrentList } from '../../../store/selectors';
 
 const TaskList = ({ dispatch, list }) => {
 
@@ -14,7 +16,7 @@ const TaskList = ({ dispatch, list }) => {
     return (
         <div className="task-list-container">
             <div className="task-list__top">
-                <h1 className="task-list__title">{list.name && list.name.toUpperCase()}</h1>
+                <h1 className="task-list__title">{list && list.name.toUpperCase()}</h1>
                 <button
                     className="task-list__delete"
                     onClick={() => dispatch(startDeleteList(list.id))}
@@ -36,8 +38,16 @@ const TaskList = ({ dispatch, list }) => {
     )
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+    // const list = getCurrentList(state.lists, state.user.currentListId);
 
-});
+    // if (!list) {
+
+    // }
+
+    return {
+        list: getCurrentList(state.lists, state.user.currentListId)
+    }
+};
 
 export default connect(mapStateToProps)(TaskList);

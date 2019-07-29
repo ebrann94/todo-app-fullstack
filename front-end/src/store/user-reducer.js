@@ -53,6 +53,11 @@ export default (state = defaultState, action) => {
                 ...state,
                 currentListId: action.listId
             };
+        case 'SET_CURRENT_LIST_TO_FIRST':
+            console.log(state);
+            return {
+                ...state,
+            }
         default: 
             return {
                 ...state

@@ -1,3 +1,4 @@
+import { batch } from 'react-redux';
 import { populateLists } from "./list-actions";
 import { handleJSONResponse } from "./utils";
 
@@ -41,9 +42,11 @@ export const startLogin = (userInfo) => {
         .then(handleJSONResponse)
         .then(({ user, token, lists }) => {
             localStorage.setItem('token', token);
-            dispatch(login(user, token));
-            // console.log(lists);
-            dispatch(populateLists(lists));
+            batch(() => {
+                dispatch(login(user, token));
+                dispatch(populateLists(lists));
+                dispatch(setCurrentList(lists[0].id));
+            })
         })
         .catch(err => {
             // console.log(err);
@@ -131,7 +134,10 @@ export const getUserInfo = () => {
             dispatch(login(user));
             // console.log(lists);
             if (lists.length > 0) {
-                dispatch(populateLists(lists));
+                batch(() => {
+                    dispatch(setCurrentList(lists[0].id))
+                    dispatch(populateLists(lists));
+                })
             }
         }).catch(error => {
             console.log(error);

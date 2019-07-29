@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLogin } from '../../store/user-actions';
 import LoadingSpinner from '../LoadingSpinner';
+import LoginHeader from '../LoginHeader';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div className="login-container">
+                <LoginHeader />
                 <div className="login-card">
                     <h1 className="login__heading">Log In</h1>
                     <form

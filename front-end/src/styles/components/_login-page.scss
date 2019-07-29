@@ -1,15 +1,23 @@
 .login-container {
-    margin: auto;
-    padding: 10px;
+    height: 100vh;
 
     border-radius: $border-radius;
     
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    background: $background;
+}
+
+.app-title {
+    color: white;
+    margin: 32px 0;
 }
 
 .login-card {
-    margin: 48px auto;
+    margin: 0 auto;
     padding: 0 16px;
     background: white;
 

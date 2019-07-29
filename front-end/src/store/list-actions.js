@@ -1,4 +1,5 @@
 import { handleJSONResponse } from './utils.js';
+import { setCurrentList } from './user-actions';
 
 export const addList = (newList) => {
     return {
@@ -21,8 +22,8 @@ export const startAddList = (listName) => dispatch => {
         })
             .then(handleJSONResponse)
             .then(res => {
-                console.log(res);
                 dispatch(addList(res));
+                dispatch(setCurrentList(res.id))
             })
             .catch(e => {
                 console.log(e);
@@ -37,7 +38,7 @@ export const deleteList = (listId) => {
     }
 };
 
-export const startDeleteList = listId => dispatch => {
+export const startDeleteList = listId => (dispatch, getState) => {
     fetch(`/api/lists/${listId}`, {
         method: 'DELETE',
         headers: {
@@ -46,7 +47,16 @@ export const startDeleteList = listId => dispatch => {
     })
         .then(handleJSONResponse)
         .then(res => {
-            dispatch(deleteList(listId))
+            const lists = getState().lists;
+            let index = lists.findIndex(list => listId === list.id)
+            lists.splice(index, 1);
+
+            if (index >= lists.length) {
+                index--
+            }
+
+            dispatch(setCurrentList(lists[index].id))
+            dispatch(deleteList(listId));
         })
         .catch(e => {
 

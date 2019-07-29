@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header';
-import UserInfo from './UserInfo';
+import UserInfo from './userlists/UserInfo';
 import TaskList from "./tasklist/TaskList";
 import UserLists from "./userlists/UserLists";
+import { getCurrentList } from '../../store/selectors';
 
-const App = ({ lists, currentListId }) => {
-
-    const list = lists.find(list => list.id === currentListId);
-    // console.log(currentListId, list);
+const App = ({ isNoLists }) => {
     return (
         <div className="task-page-container">
             {/*<Header/>*/}
@@ -17,17 +15,20 @@ const App = ({ lists, currentListId }) => {
                 <UserLists />
             </div>
             <main className="main-container">
-                <TaskList
-                    list={list || []}
-                />
+                {
+                    isNoLists ? (
+                        <p>Please Create a List</p>
+                    ) : (
+                        <TaskList />
+                    )
+                }
             </main>
         </div>
     );
 };
 
-const mapStateToProps = state => ({
-    lists: state.lists,
-    currentListId: state.user.currentListId,
-});
+const mapsStateToProps = state => ({
+    isNoLists: state.lists.length <= 0
+})
 
-export default connect(mapStateToProps)(App);
+export default connect(mapsStateToProps)(App);

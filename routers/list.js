@@ -9,11 +9,7 @@ const router = new Router();
 
 router.get('/lists', auth, async (req, res) => {
     try {
-        const lists = await List.find({ owner: req.user._id});
-
-        // for (let i = 0; i < lists.length; i++) {
-        //     await lists[i].populate('tasks').execPopulate();
-        // }
+        const lists = await List.find({ owner: req.user._id });
 
         const promises = lists.map(list => list.populate('tasks').execPopulate());
         await Promise.all(promises);
@@ -21,7 +17,6 @@ router.get('/lists', auth, async (req, res) => {
         const listsObject = documentArrayToObjects(lists);
         res.send(listsObject);
     } catch (e) {
-        console.log(e);
         res.status(500).send();
     }
 });
@@ -42,7 +37,6 @@ router.post('/lists/add-list', auth, async (req, res) => {
 });
 
 router.delete('/lists/:id', auth, async (req, res) => {
-    console.log(req.params.id);
    try {
        const list = await List.findOneAndDelete({ _id: req.params.id });
        // Need to delete corresponding tasks as well.
@@ -60,21 +54,9 @@ router.patch('/lists/:id', auth, async (req, res) => {
         name,
         tasks
     } = req.body;
-    console.log(tasks);
     try {
         const list = await List.findById(req.params.id);
 
-        // if (req.body.description) {
-        //     list.description = req.body.description;
-        // }
-        //
-        // if (req.body.name) {
-        //     list.name = req.body.name;
-        // }
-        //
-        // if (req.body.tasks) {
-        //     list.tasks = req.body.tasks.map(taskId => ObjectId(taskId));
-        // }
         if (description) {
             list.description = description;
         }
@@ -88,7 +70,6 @@ router.patch('/lists/:id', auth, async (req, res) => {
         }
         await list.save();
         await list.populate('tasks').execPopulate();
-        console.log(list);
 
         res.send(list);
     } catch (e) {

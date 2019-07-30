@@ -13,15 +13,12 @@ router.post('/tasks/add-task', auth, async (req, res) => {
     });
 
     try {
-        // await List.findByIdAndUpdate(req.body.listId, { $push: { tasks: task._id}});
-        // await task.save();
         await Promise.all([
-            List.findByIdAndUpdate(req.body.listId, { $push: { tasks: task._id}}),
+            List.findByIdAndUpdate(req.body.listId, { $push: { tasks: task._id }}),
             task.save()
         ]);
         res.status(201).send(task);
     } catch (e) {
-        console.log(e);
         res.status(500).send();
     }
 });
@@ -64,7 +61,6 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         await task.save();
         res.send(task)
     } catch (e) {
-        console.log(e);
         res.status(500).send();
     }
 });

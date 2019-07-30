@@ -1,3 +1,4 @@
+import { batch } from 'react-redux';
 import { handleJSONResponse } from './utils.js';
 import { setCurrentList } from './user-actions';
 
@@ -22,8 +23,10 @@ export const startAddList = (listName) => dispatch => {
         })
             .then(handleJSONResponse)
             .then(res => {
-                dispatch(addList(res));
-                dispatch(setCurrentList(res.id))
+                batch(() => {
+                    dispatch(addList(res));
+                    dispatch(setCurrentList(res.id))
+                })
             })
             .catch(e => {
                 console.log(e);
@@ -31,7 +34,7 @@ export const startAddList = (listName) => dispatch => {
 
 };
 
-export const deleteList = (listId) => {
+export const deleteList = listId => {
     return {
         type: 'DELETE_LIST',
         listId
@@ -48,15 +51,20 @@ export const startDeleteList = listId => (dispatch, getState) => {
         .then(handleJSONResponse)
         .then(res => {
             const lists = getState().lists;
-            let index = lists.findIndex(list => listId === list.id)
-            lists.splice(index, 1);
+            let idToSet = '';
+            if (lists.length > 1) {
+                let index = lists.findIndex(list => listId === list.id)
+                lists.splice(index, 1);
+                if (index >= lists.length) {
+                    index--
+                }
+                idToSet = lists[index].id
+            } 
 
-            if (index >= lists.length) {
-                index--
-            }
-
-            dispatch(setCurrentList(lists[index].id))
-            dispatch(deleteList(listId));
+            batch(() => {
+                dispatch(setCurrentList(idToSet))
+                dispatch(deleteList(listId));
+            })
         })
         .catch(e => {
 

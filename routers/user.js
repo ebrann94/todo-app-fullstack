@@ -71,7 +71,6 @@ router.get('/users/me', auth, async (req, res) => {
         });
     } catch (e) {
         res.status(404).send();
-        console.log(e);
     }
 });
 

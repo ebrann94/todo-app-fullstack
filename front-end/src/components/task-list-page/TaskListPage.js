@@ -4,12 +4,10 @@ import Header from '../Header';
 import UserInfo from './userlists/UserInfo';
 import TaskList from "./tasklist/TaskList";
 import UserLists from "./userlists/UserLists";
-import { getCurrentList } from '../../store/selectors';
 
 const App = ({ isNoLists }) => {
     return (
         <div className="task-page-container">
-            {/*<Header/>*/}
             <div className="sidebar-container">
                 <UserInfo />
                 <UserLists />
@@ -17,7 +15,7 @@ const App = ({ isNoLists }) => {
             <main className="main-container">
                 {
                     isNoLists ? (
-                        <p>Please Create a List</p>
+                        <p className="no-list-message">&lt;-- Click the plus button to the left to add a new list</p>
                     ) : (
                         <TaskList />
                     )

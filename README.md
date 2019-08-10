@@ -12,9 +12,9 @@ The project is built using the MERN stack.
 
 The front end is a react app written in JavaScript and using SCSS for styling.
 The app makes use of libraries such as: 
-  *`react-router` - for login and signup routes
-  *`redux` - for state management  
-  *`redux-thunk` - for asynchronous redux actions
+  * `react-router` - for login and signup routes
+  * `redux` - for state management  
+  * `redux-thunk` - for asynchronous redux actions
 
 #### Back End
 

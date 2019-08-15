@@ -1,5 +1,16 @@
 import { updateListItemsById } from './utils';
 
+const tasks = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_TASK':
+            return [...state, action.task]
+        case 'EDIT_TASK':
+            return state.map(task => task._id === action.task._id ? action.task : task)
+        case 'DELETE_TASK':
+            return state.filter(task => task._id !== action.taskId)
+    }
+}
+
 const devState = [{
     id: '1234',
     name: 'Things To Do',
@@ -15,11 +26,23 @@ const devState = [{
 
 const defaultState = [];
 
+const updateListTasks = (state, listId, action) => {
+    return state.map(list => {
+        if (list.id === listId) {
+            return {
+                ...list,
+                tasks: tasks(list.tasks, action)
+            }
+        } 
+
+        return list
+    })
+}
+
 export default (state = defaultState, action) => {
-    // console.log(action.type);
     switch (action.type) {
         case 'ADD_LIST':
-            return state.concat(action.newList);
+            return [...state, action.newList]
         case 'DELETE_LIST':
             return state.filter(list => list.id !== action.listId);
         case 'EDIT_LIST':
@@ -29,17 +52,15 @@ export default (state = defaultState, action) => {
         case 'REPLACE_TASKS':
             return updateListItemsById(state, action.listId, () => [...action.tasks]);
         case 'ADD_TASK_SUCCESS':    
-            return updateListItemsById(state, action.listId, items => [...items, action.task]);
+            return updateListTasks(state, action.listId, { type:  'ADD_TASK', task: action.task })
         case 'EDIT_TASK':
-            return updateListItemsById(state, action.listId, items => {
-                return items.map(task => task._id === action.task._id ? action.task : task)
-            });
+            return updateListTasks(state, action.listId, { type: 'EDIT_TASK', task: action.task })
         case 'DELETE_TASK':
-            return updateListItemsById(state, action.listId, items => {
-                return items.filter(task => task._id !== action.taskId);
-            });
+            return updateListTasks(state, action.listId, { type: 'DELETE_TASK', taskId: action.taskId })
         case 'POPULATE_LISTS':
             return [...action.lists];
+        case 'LOGIN_SUCCESS':
+            return [...action.payload.lists]
         case 'RESET_LISTS':
             return defaultState;
         default :

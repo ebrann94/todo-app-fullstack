@@ -1,4 +1,5 @@
 import { handleJSONResponse } from "./utils";
+import * as API from '../api/api';
 
 export const addTask = (listId, task) => {
     return {
@@ -9,22 +10,13 @@ export const addTask = (listId, task) => {
 };
 
 export const startAddTask = (listId, text) => {
-    return dispatch => {
-        fetch('/api/tasks/add-task', {
-            method: 'POST',
-            body: JSON.stringify({ listId, text }),
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(handleJSONResponse)
-        .then(data => {
-            dispatch(addTask(listId, data))
-        })
-        .catch(error => {
-            console.log(error);
-        })
+    return async dispatch => {
+        try {
+            const newTask = await API.createNewTask(listId, text)
+            dispatch(addTask(listId, newTask))
+        } catch (e) {
+
+        }
     }
 };
 
@@ -37,23 +29,13 @@ export const editTask = (listId, task) => {
 };
 
 export const startEditTask = (listId, taskId, edits )=> {
-    return dispatch => {
-        fetch(`/api/tasks/${taskId}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(edits)
-        })
-            .then(handleJSONResponse)
-            .then(task => {
-                // console.log(task);
-                dispatch(editTask(listId, task))
-            })
-            .catch(e => {
-                console.log(e);
-            })
+    return async dispatch => {
+        try {
+            const editedTask = await API.editTask(taskId, edits)
+            dispatch(editTask(listId, editedTask))
+        } catch (e) {
+
+        }
     }
 };
 
@@ -65,20 +47,13 @@ export const removeOne = (listId, taskId) => {
     }
 };
 
-export const startDeleteTask = (listId, id) => {
-    return dispatch => {
-        fetch(`/api/tasks/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(handleJSONResponse)
-        .then(task => {
-            dispatch(removeOne(listId, task._id));
-        })
-        .catch(error => {
-            console.log(error);
-        });
+export const startDeleteTask = (listId, taskId) => {
+    return async dispatch => {
+        try {
+            const deletedTask = await API.deleteTask(taskId)
+            dispatch(removeOne(listId, deletedTask._id))
+        } catch (e) {
+
+        }
     }
 };

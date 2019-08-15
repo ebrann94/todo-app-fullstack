@@ -1,6 +1,5 @@
 
 const defaultState = {
-    clientToken: '',
     user: {
         firstName: '',
         secondName: '',
@@ -13,31 +12,22 @@ const defaultState = {
     currentListId: ''
 };
 
-const devState = {
-    clientToken: localStorage.getItem('token') || '',
-    user: {
-        firstName: 'Ethan',
-        secondName: 'Brann',
-        email: '',
-        id: ''
-    },
-    loggedIn: true,
-    loginPending: false,
-    loginError: ''
-};
-
 export default (state = defaultState, action) => {
     switch (action.type) {
         case 'LOGIN_PENDING':
             return {
+                ...state,
                 loginPending: true
             };
         case 'LOGIN_SUCCESS':
             return {
-                clientToken: action.token,
-                user: action.user,
+                clientToken: action.payload.token,
+                user: {
+                    ...action.payload.user
+                },
                 loggedIn: true,
-                loginPending: false
+                loginPending: false,
+                currentListId: action.payload.lists.length > 0 ? action.payload.lists[0].id : ''
             };
         case 'LOGOUT_SUCCESS':
             return {

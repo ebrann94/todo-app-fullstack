@@ -1,6 +1,7 @@
 import { batch } from 'react-redux';
 import { populateLists } from "./list-actions";
 import { handleJSONResponse } from "./utils";
+import * as API from '../api/api';
 
 export const loginPending = () => {
     return {
@@ -15,133 +16,79 @@ const loginError = (error) => {
     }
 };
 
-const login = ({firstName, lastName, email, _id}, token) => {
+const login = (user, token, lists) => {
     return {
         type: 'LOGIN_SUCCESS',
-        user: {
-            firstName,
-            lastName,
-            email,
-            _id
-        },
-        token
+        payload: {
+            user,
+            token,
+            lists
+        }
     }
 };
 
+const logout = () => ({ type: 'LOGOUT_SUCCESS' })
+
 export const startLogin = (userInfo) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(loginPending());
-        // Login route
-        fetch('/api/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        })
-        .then(handleJSONResponse)
-        .then(({ user, token, lists }) => {
-            localStorage.setItem('token', token);
-            batch(() => {
-                dispatch(login(user, token));
-                dispatch(populateLists(lists));
-                dispatch(setCurrentList(lists[0].id));
-            })
-        })
-        .catch(err => {
-            // console.log(err);
+
+        try {
+            const { user, token, lists } = await API.login(userInfo)
+            dispatch(login(user, token, lists));
+            
+        } catch (e) {
             dispatch(loginError('Incorrect Password or Email'))
-        });
+        }
     }
 };
 
 export const startLogout = () => {
-    return (dispatch) => {
-        fetch('/api/users/logout', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                dispatch({ type: 'LOGOUT_SUCCESS'});
-                localStorage.removeItem('token');
-            }
-        })
-        .catch(e => {
+    return async (dispatch) => {
+        try {
+            await API.logout()
+            dispatch(logout())
+        } catch (e) {
 
-        })
-
+        }
     }
 };
 
 export const startLogoutAll = () =>
-    dispatch => {
-        fetch('/api/users/logout-all', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(res => {
-            if (res.ok) {
-                dispatch({ type: 'LOGOUT_SUCCESS'});
-                dispatch({ type: 'RESET_LISTS'});
-                localStorage.removeItem('token');
-            }
-        })
-        .catch(e => {
+    async dispatch => {
+        try {
+            await API.logoutAll()
+            dispatch(logout())
+        } catch (e) {
 
-        })
-
+        }
     };
 
 export const startSignup = (data) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(loginPending());
-        fetch('/api/users/signup', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(handleJSONResponse)
-        .then(({user, token}) => {
-            // console.log(user, token);
-            localStorage.setItem('token', token);
-            dispatch(login(user, token));
-        })
-        .catch(error => {
-            console.log(error);
-            dispatch(loginError(error));
-        });
+
+        try {
+            const { user, token } = await API.createAccount(data)
+            
+            dispatch(login(user, token, []))
+        } catch (e) {
+            dispatch(loginError(e))
+        }
     }
 };
 
 export const getUserInfo = () => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(loginPending());
-        fetch('/api/users/me', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(handleJSONResponse)
-        .then(({ user, lists}) => {
-            dispatch(login(user));
-            // console.log(lists);
-            if (lists.length > 0) {
-                batch(() => {
-                    dispatch(setCurrentList(lists[0].id))
-                    dispatch(populateLists(lists));
-                })
-            }
-        }).catch(error => {
-            console.log(error);
-        })
+        try {
+            const { user, lists } = await API.getUserData()
+            const token = localStorage.getItem('token')
+            dispatch(login(user, token, lists))
+
+        } catch (e) {
+            console.log(e)
+        }
     }
 };
 
